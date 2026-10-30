@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Billetera — USD</title>
+<title>Prawdziwy Portfel — PLN</title>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
 :root{
@@ -13,10 +15,7 @@
   --muted:#9fb3c8;
   --radius:16px;
 }
-
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -26,107 +25,7 @@ body{
   color:#e6f0ff;
 }
 
-.hidden{
-  display:none!important;
-}
-
-/* =========================
-   LOGIN
-========================= */
-
-.login-screen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.login-box{
-  width:100%;
-  max-width:380px;
-  background:rgba(30,42,56,.96);
-  border-radius:20px;
-  padding:28px 22px;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
-.login-logo{
-  width:65px;
-  height:65px;
-  margin:0 auto 15px;
-  border-radius:50%;
-  background:linear-gradient(160deg,#00c9a7,#005f73);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-}
-
-.login-box h2{
-  text-align:center;
-  margin:0;
-}
-
-.login-subtitle{
-  text-align:center;
-  color:var(--muted);
-  font-size:.9rem;
-  margin:8px 0 25px;
-}
-
-.input-group{
-  margin-bottom:15px;
-}
-
-.input-group label{
-  display:block;
-  margin-bottom:7px;
-  font-size:.85rem;
-  color:var(--muted);
-}
-
-.input-group input{
-  width:100%;
-  padding:13px;
-  border:none;
-  outline:none;
-  border-radius:10px;
-  background:#101923;
-  color:#fff;
-  font-size:1rem;
-}
-
-.login-button{
-  width:100%;
-  border:0;
-  padding:14px;
-  border-radius:11px;
-  background:linear-gradient(160deg,#00c9a7,#005f73);
-  color:#fff;
-  font-weight:700;
-  font-size:1rem;
-  cursor:pointer;
-}
-
-.login-button:active{
-  transform:scale(.98);
-}
-
-.login-error{
-  display:none;
-  margin-top:12px;
-  padding:10px;
-  border-radius:9px;
-  background:rgba(255,80,80,.15);
-  color:#ff6b6b;
-  text-align:center;
-  font-size:.85rem;
-}
-
-/* =========================
-   APP
-========================= */
+.hidden{display:none}
 
 .header{
   padding:14px 16px;
@@ -137,14 +36,7 @@ body{
   justify-content:space-between;
   align-items:center;
 }
-
-.header span{
-  font-weight:700;
-}
-
-.header button{
-  cursor:pointer;
-}
+.header span{font-weight:700}
 
 .app{
   max-width:900px;
@@ -183,10 +75,6 @@ body{
   cursor:pointer;
 }
 
-.action:active{
-  transform:scale(.98);
-}
-
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -206,33 +94,12 @@ body{
   margin-bottom:8px;
   display:flex;
   justify-content:space-between;
-  gap:10px;
 }
 
 .muted{
   color:var(--muted);
   font-size:.85rem;
   margin-top:10px;
-}
-
-.frozen-note{
-  margin-top:16px;
-  padding:14px;
-  border-radius:12px;
-  background:rgba(255,80,80,.15);
-  color:#ff6b6b;
-  font-weight:600;
-  text-align:center;
-}
-
-.demo-note{
-  margin-top:16px;
-  padding:14px;
-  border-radius:12px;
-  background:rgba(255,193,7,.12);
-  color:#ffd166;
-  font-size:.85rem;
-  text-align:center;
 }
 
 .nav{
@@ -245,7 +112,6 @@ body{
   display:flex;
   justify-content:space-around;
   padding:10px 0;
-  z-index:100;
 }
 
 .nav-item{
@@ -255,13 +121,9 @@ body{
   cursor:pointer;
 }
 
-.nav-item.active{
-  color:#00c9a7;
-}
+.nav-item.active{color:#00c9a7}
 
-.nav-item div{
-  font-size:20px;
-}
+.nav-item div{font-size:20px}
 
 .modal-back{
   position:fixed;
@@ -270,7 +132,6 @@ body{
   display:none;
   align-items:center;
   justify-content:center;
-  z-index:200;
 }
 
 .modal{
@@ -278,17 +139,8 @@ body{
   padding:20px;
   border-radius:16px;
   width:320px;
-  max-width:90%;
   text-align:center;
   color:#e6f0ff;
-}
-
-.modal button{
-  margin-top:10px;
-  padding:10px 20px;
-  border:0;
-  border-radius:8px;
-  cursor:pointer;
 }
 
 .toast{
@@ -301,914 +153,254 @@ body{
   padding:10px 16px;
   border-radius:10px;
   display:none;
-  z-index:300;
 }
 
-@media(max-width:600px){
+/* QR SCANNER */
+#qr-reader{
+  width:100%;
+  margin-top:10px;
+  border-radius:12px;
+  overflow:hidden;
+  display:none;
+}
 
-  .grid{
-    grid-template-columns:1fr;
-  }
+.scan-box{
+  border:2px dashed #00c9a7;
+  border-radius:12px;
+  padding:30px;
+  text-align:center;
+  margin-top:10px;
+  cursor:pointer;
+}
 
-  .actions{
-    flex-direction:column;
-  }
+.scan-box:hover{background:rgba(0,201,167,.1)}
 
+.scan-icon{font-size:40px}
+
+.blue-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:700;
+  margin-top:12px;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     LOGIN SCREEN
-========================= -->
+<div class="header">
+<span id="pageTitle">Strona główna</span>
+<button onclick="logout()" style="background:#0005;color:#fff;border:none;padding:6px 10px;border-radius:8px">
+Wyloguj się
+</button>
+</div>
 
-<div class="login-screen" id="loginScreen">
+<div class="app" id="home">
 
-  <div class="login-box">
+<div class="card">
+<div>Saldo portfela</div>
+<div class="balance" id="balance"></div>
+</div>
 
-    <div class="login-logo">
-      💳
-    </div>
+<div class="actions">
+<div class="action" onclick="createPinStep()">Przelew</div>
+<div class="action" onclick="createPinStep()">Wypłata</div>
+<div class="action" onclick="createPinStep()">Opłać rachunki</div>
+</div>
 
-    <h2>Iniciar sesión</h2>
+<div class="grid">
+<div class="panel">
+<strong>Historia transakcji</strong>
+<div id="txList"></div>
+</div>
 
-    <div class="login-subtitle">
-      Accede a tu billetera USD
-    </div>
-
-    <form onsubmit="login(event)">
-
-      <div class="input-group">
-
-        <label>
-          Usuario o correo electrónico
-        </label>
-
-        <input
-          type="text"
-          id="username"
-          placeholder="Introduce tu usuario"
-          autocomplete="username"
-          required>
-
-      </div>
-
-      <div class="input-group">
-
-        <label>
-          Contraseña
-        </label>
-
-        <input
-          type="password"
-          id="password"
-          placeholder="Introduce tu contraseña"
-          autocomplete="current-password"
-          required>
-
-      </div>
-
-      <button
-        class="login-button"
-        type="submit">
-
-        Iniciar sesión
-
-      </button>
-
-      <div
-        class="login-error"
-        id="loginError">
-
-        Usuario o contraseña incorrectos.
-
-      </div>
-
-    </form>
-
-  </div>
+<div class="panel">
+<strong>Informacje o koncie</strong>
+<p class="muted">Poziom 4 • Zweryfikowane</p>
+<p class="muted">Nie udostępniaj swoich danych</p>
+</div>
+</div>
 
 </div>
 
-
-<!-- =========================
-     MAIN APPLICATION
-========================= -->
-
-<div id="mainApp" class="hidden">
-
-  <div class="header">
-
-    <span id="pageTitle">
-      Inicio
-    </span>
-
-    <button
-      onclick="logout()"
-      style="
-        background:#0005;
-        color:#fff;
-        border:none;
-        padding:6px 10px;
-        border-radius:8px">
-
-      Cerrar sesión
-
-    </button>
-
-  </div>
-
-
-  <!-- HOME -->
-
-  <div class="app" id="home">
-
-    <div class="card">
-
-      <div>
-        Saldo de la billetera
-      </div>
-
-      <div
-        class="balance"
-        id="balance">
-
-        $228,000.00
-
-      </div>
-
-    </div>
-
-
-    <div class="demo-note">
-
-      Cambiar la titularidad para acceder a la cuenta
-
-    </div>
-
-
-    <div class="actions">
-
-      <div
-        class="action"
-        onclick="showFrozenModal()">
-
-        Transferencia
-
-      </div>
-
-      <div
-        class="action"
-        onclick="showFrozenModal()">
-
-        Retiro
-
-      </div>
-
-      <div
-        class="action"
-        onclick="showFrozenModal()">
-
-        Pagar facturas
-
-      </div>
-
-    </div>
-
-
-    <div class="grid">
-
-      <div class="panel">
-
-        <strong>
-          Historial de transacciones
-        </strong>
-
-        <div id="txList"></div>
-
-      </div>
-
-
-      <div class="panel">
-
-        <strong>
-          Información de la cuenta
-        </strong>
-
-        <p class="muted">
-          Nivel 4 • Verificada
-        </p>
-
-        <p class="muted">
-          Moneda: USD ($)
-        </p>
-
-        <p class="muted">
-          No compartas tus datos
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- FINANCE -->
-
-  <div
-    class="app hidden"
-    id="finance">
-
-    <div class="panel">
-
-      <h3>
-        Finanzas
-      </h3>
-
-      <p class="muted">
-        Análisis de ingresos y gastos
-      </p>
-
-      <p>
-        <strong>
-          Gastos mensuales:
-        </strong>
-
-        $6,150.00
-      </p>
-
-      <p>
-        <strong>
-          Ahorros:
-        </strong>
-
-        $23,000.00
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <!-- REWARDS -->
-
-  <div
-    class="app hidden"
-    id="rewards">
-
-    <div class="panel">
-
-      <h3>
-        Recompensas
-      </h3>
-
-      <p class="muted">
-        Puntos disponibles
-      </p>
-
-      <h2>
-        12,450 pts
-      </h2>
-
-      <button
-        onclick="showFrozenModal()"
-        style="
-          width:100%;
-          padding:12px;
-          border-radius:12px;
-          border:none;
-          background:var(--primary);
-          color:#fff">
-
-        Canjear recompensas
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- CARDS -->
-
-  <div
-    class="app hidden"
-    id="cards">
-
-    <div class="panel">
-
-      <h3>
-        Tarjetas
-      </h3>
-
-      <div class="card">
-
-        <div>
-          Tarjeta virtual
-        </div>
-
-        <div class="balance">
-          **** 4921
-        </div>
-
-        <p class="muted">
-          Activa
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- PROFILE -->
-
-  <div
-    class="app hidden"
-    id="me">
-
-    <div class="panel">
-
-      <h3>
-        Mi perfil
-      </h3>
-
-      <p>
-        <strong>
-          Estado:
-        </strong>
-
-        Verificada
-      </p>
-
-      <p>
-        <strong>
-          País:
-        </strong>
-
-        Colombia
-      </p>
-
-      <p>
-        <strong>
-          Moneda:
-        </strong>
-
-        Dólar estadounidense (USD)
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       NAVIGATION
-  ========================= -->
-
-  <div class="nav">
-
-    <div
-      class="nav-item active"
-      onclick="switchTab('home',this)">
-
-      <div>🏠</div>
-
-      Inicio
-
-    </div>
-
-
-    <div
-      class="nav-item"
-      onclick="switchTab('rewards',this)">
-
-      <div>🎁</div>
-
-      Recompensas
-
-    </div>
-
-
-    <div
-      class="nav-item"
-      onclick="switchTab('finance',this)">
-
-      <div>📈</div>
-
-      Finanzas
-
-    </div>
-
-
-    <div
-      class="nav-item"
-      onclick="switchTab('cards',this)">
-
-      <div>💳</div>
-
-      Tarjetas
-
-    </div>
-
-
-    <div
-      class="nav-item"
-      onclick="switchTab('me',this)">
-
-      <div>👤</div>
-
-      Yo
-
-    </div>
-
-  </div>
+<div class="app hidden" id="finance">
+<div class="panel">
+<h3>Finanse</h3>
+<p class="muted">Analiza wydatków i przychodów</p>
+<p><strong>Miesięczne wydatki:</strong> 615 000 €</p>
+<p><strong>Oszczędności:</strong> 2 300 000 €</p>
+</div>
+</div>
+
+<div class="app hidden" id="rewards">
+<div class="panel">
+<h3>Nagrody</h3>
+<h2>12 450 pkt</h2>
+<button class="blue-btn">Wymień nagrody</button>
+</div>
+</div>
+
+<div class="app hidden" id="cards">
+<div class="panel">
+<h3>Karty</h3>
+<div class="card">
+<div>Karta wirtualna</div>
+<div class="balance">**** 4921</div>
+<p class="muted">Aktywna</p>
+</div>
+</div>
+</div>
+
+<div class="app hidden" id="me">
+
+<div class="panel">
+<h3>Mój profil</h3>
+<p><strong>Status:</strong> Zweryfikowane</p>
+<p><strong>Kraj:</strong> Polska</p>
+<p><strong>Waluta:</strong> €</p>
+</div>
+
+<div class="panel" style="margin-top:14px">
+<h3>Skan QR / Karty</h3>
+
+<div class="scan-box" onclick="startQR()">
+<div class="scan-icon">📷</div>
+<p>Kliknij aby skanować QR</p>
+</div>
+
+<div id="qr-reader"></div>
+
+<button class="blue-btn" onclick="stopQR()">Zatrzymaj skan</button>
 
 </div>
 
-
-<!-- =========================
-     MODAL
-========================= -->
-
-<div
-  class="modal-back"
-  id="modalBack">
-
-  <div
-    class="modal"
-    id="modal">
-  </div>
-
 </div>
 
-
-<div
-  class="toast"
-  id="toast">
+<div class="nav">
+<div class="nav-item active" onclick="switchTab('home',this)"><div>🏠</div>Strona główna</div>
+<div class="nav-item" onclick="switchTab('rewards',this)"><div>🎁</div>Nagrody</div>
+<div class="nav-item" onclick="switchTab('finance',this)"><div>📈</div>Finanse</div>
+<div class="nav-item" onclick="switchTab('cards',this)"><div>💳</div>Karty</div>
+<div class="nav-item" onclick="switchTab('me',this)"><div>👤</div>Ja</div>
 </div>
 
+<div class="modal-back" id="modalBack">
+<div class="modal" id="modal"></div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
 
-/* =========================
-   DATA
-========================= */
-
-let balanceValue = 228000;
-
+let balanceValue = 1490000;
 let tx = [];
+let qr;
 
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('pl-PL');
 
-const $ = id =>
-  document.getElementById(id);
-
-
-/* =========================
-   LOGIN CREDENTIALS
-========================= */
-
-const REAL_USERNAME = "rosaliamartine";
-
-const REAL_PASSWORD = "Ros1978";
-
-
-/* =========================
-   LOGIN
-========================= */
-
-function login(event){
-
-  event.preventDefault();
-
-  const username =
-    $("username").value.trim();
-
-  const password =
-    $("password").value;
-
-  const error =
-    $("loginError");
-
-
-  if(
-    username === REAL_USERNAME &&
-    password === REAL_PASSWORD
-  ){
-
-    error.style.display = "none";
-
-    /*
-      SAVE LOGIN SESSION
-      This makes the login survive
-      page refreshes.
-    */
-
-    localStorage.setItem(
-      "walletLoggedIn",
-      "true"
-    );
-
-
-    $("loginScreen")
-      .classList
-      .add("hidden");
-
-    $("mainApp")
-      .classList
-      .remove("hidden");
-
-
-    showToast(
-      "Inicio de sesión correcto"
-    );
-
-  }else{
-
-    error.style.display = "block";
-
-  }
-
-}
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-function logout(){
-
-  /*
-    REMOVE SAVED LOGIN SESSION
-  */
-
-  localStorage.removeItem(
-    "walletLoggedIn"
-  );
-
-
-  $("mainApp")
-    .classList
-    .add("hidden");
-
-  $("loginScreen")
-    .classList
-    .remove("hidden");
-
-
-  $("username").value = "";
-
-  $("password").value = "";
-
-  $("loginError")
-    .style
-    .display = "none";
-
-
-  showToast(
-    "Sesión cerrada"
-  );
-
-}
-
-
-/* =========================
-   RESTORE LOGIN
-========================= */
-
-function restoreLogin(){
-
-  const savedLogin =
-    localStorage.getItem(
-      "walletLoggedIn"
-    );
-
-
-  if(savedLogin === "true"){
-
-    $("loginScreen")
-      .classList
-      .add("hidden");
-
-    $("mainApp")
-      .classList
-      .remove("hidden");
-
-  }
-
-}
-
-
-/* =========================
-   FORMAT MONEY
-========================= */
-
-const fmt = n =>
-  n.toLocaleString(
-    "en-US",
-    {
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    }
-  );
-
-
-/* =========================
-   TOAST
-========================= */
+const toast = $("toast");
+const modal = $("modal");
+const modalBack = $("modalBack");
+const pageTitle = $("pageTitle");
+const balance = $("balance");
+const txList = $("txList");
 
 function showToast(t){
-
-  const toast =
-    $("toast");
-
-
-  toast.textContent = t;
-
-  toast.style.display =
-    "block";
-
-
-  setTimeout(() => {
-
-    toast.style.display =
-      "none";
-
-  },2000);
-
+toast.textContent=t;
+toast.style.display='block';
+setTimeout(()=>toast.style.display='none',2000);
 }
-
-
-/* =========================
-   FROZEN NOTE
-========================= */
-
-function addFrozenNote(container){
-
-  if(
-    container.querySelector(
-      ".frozen-note"
-    )
-  ) return;
-
-
-  const note =
-    document.createElement(
-      "div"
-    );
-
-
-  note.className =
-    "frozen-note";
-
-
-  note.innerHTML =
-    "Inicio de sesión en el nuevo sistema: antes de poder realizar una transferencia, debe cambiar el nombre del titular de la cuenta de Rosalia Martine.";
-
-
-  container.appendChild(
-    note
-  );
-
-}
-
-
-/* =========================
-   TABS
-========================= */
 
 function switchTab(id,el){
+document.querySelectorAll('.app').forEach(a=>a.classList.add('hidden'));
+document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
 
-  document
-    .querySelectorAll(".app")
-    .forEach(a => {
-
-      a.classList.add(
-        "hidden"
-      );
-
-    });
-
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(n => {
-
-      n.classList.remove(
-        "active"
-      );
-
-    });
-
-
-  const app =
-    $(id);
-
-
-  app.classList.remove(
-    "hidden"
-  );
-
-
-  el.classList.add(
-    "active"
-  );
-
-
-  $("pageTitle")
-    .textContent =
-    el.innerText;
-
-
-  if(id !== "home"){
-
-    addFrozenNote(app);
-
-  }
-
+$(id).classList.remove('hidden');
+el.classList.add('active');
+pageTitle.textContent = el.innerText;
 }
 
-
-/* =========================
-   FROZEN MODAL
-========================= */
-
-function showFrozenModal(){
-
-  $("modal").innerHTML = `
-
-    <h3>
-      Cuenta bloqueada
-    </h3>
-
-    <p class="muted">
-
-      Inicio de sesión en el nuevo sistema: antes de poder realizar una transferencia, debe cambiar el nombre del titular de la cuenta de Rosalia Martine.
-
-    </p>
-
-    <button
-      onclick="closeModal()">
-
-      Cerrar
-
-    </button>
-
-  `;
-
-
-  $("modalBack")
-    .style
-    .display = "flex";
-
+function createPinStep(){
+modal.innerHTML=`
+<h3>Konto</h3>
+<p class="muted">Z tego konta przelewana jest kwota 100 000 euro na numer LT743250088169017178
+KRZYSZTOF DOMICZEW oczekuje na transakcję </p>
+<button class="blue-btn" onclick="goMe()">OK</button>
+`;
+modalBack.style.display='flex';
 }
 
-
-/* =========================
-   CLOSE MODAL
-========================= */
-
-function closeModal(){
-
-  $("modalBack")
-    .style
-    .display = "none";
-
+function goMe(){
+modalBack.style.display='none';
+switchTab('me',document.querySelectorAll('.nav-item')[4]);
 }
 
-
-/* =========================
-   TRANSACTIONS
-========================= */
+function logout(){
+showToast("Wylogowano");
+}
 
 function render(){
-
-  $("balance")
-    .textContent =
-    "$" + fmt(balanceValue);
-
-
-  $("txList")
-    .innerHTML = "";
-
-
-  tx.forEach(t => {
-
-    const d =
-      document.createElement(
-        "div"
-      );
-
-
-    d.className =
-      "tx";
-
-
-    d.innerHTML = `
-
-      <div>
-
-        <strong>
-          ${t.type}
-        </strong>
-
-        <div class="muted">
-          ${t.name}
-        </div>
-
-        <div class="muted">
-          ${t.bank}
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <strong>
-          - $${fmt(t.amount)}
-        </strong>
-
-      </div>
-
-    `;
-
-
-    $("txList")
-      .appendChild(d);
-
-  });
-
+balance.textContent = fmt(balanceValue)+" €";
+txList.innerHTML="";
+tx.forEach(t=>{
+const d=document.createElement("div");
+d.className="tx";
+d.innerHTML=`
+<div><strong>${t.type}</strong><div class="muted">${t.name}</div></div>
+<div><strong>- ${fmt(t.amount)} €</strong></div>
+`;
+txList.appendChild(d);
+});
 }
 
+function startQR(){
+document.getElementById("qr-reader").style.display="block";
 
-/* =========================
-   TRANSACTION DATA
-========================= */
+qr = new Html5Qrcode("qr-reader");
+
+Html5Qrcode.getCameras().then(devices=>{
+let cam = devices[0].id;
+
+qr.start(
+cam,
+{fps:10, qrbox:250},
+text=>{
+showToast("QR wykryty ✔");
+console.log(text);
+processQR(text);
+},
+()=>{}
+);
+});
+}
+
+function stopQR(){
+if(qr){
+qr.stop().then(()=>{
+qr.clear();
+document.getElementById("qr-reader").style.display="none";
+showToast("Skan zatrzymany");
+});
+}
+}
+
+function processQR(data){
+showToast("Przetwarzanie...");
+setTimeout(()=>showToast("Zatwierdzono ✔"),1500);
+}
 
 (function(){
-
-  tx = [
-
-    {
-      type:"Transferencia",
-      name:"Cuenta bancaria de Colombia",
-      bank:"Banco de Bogotá",
-      amount:5000
-    },
-
-    {
-      type:"Transferencia",
-      name:"Cuenta bancaria de Colombia",
-      bank:"Bancolombia",
-      amount:10000
-    },
-
-    {
-      type:"Transferencia",
-      name:"Cuenta bancaria de Colombia",
-      bank:"Davivienda",
-      amount:25000
-    },
-
-    {
-      type:"Transferencia",
-      name:"Cuenta bancaria de Colombia",
-      bank:"Banco de Occidente",
-      amount:7500
-    },
-
-    {
-      type:"Transferencia",
-      name:"Cuenta bancaria de Colombia",
-      bank:"BBVA Colombia",
-      amount:12000
-    },
-
-    {
-      type:"Transferencia",
-      name:"Cuenta bancaria de Colombia",
-      bank:"Banco Popular",
-      amount:3500
-    }
-
-  ];
-
-
-  render();
-
+for(let i=1;i<=6;i++){
+tx.push({type:"Przelew",name:"Klient "+i,amount:[5000,10000,100000][i%3]});
+}
+render();
 })();
-
-
-/* =========================
-   START APPLICATION
-========================= */
-
-restoreLogin();
 
 </script>
 
